@@ -16,13 +16,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController mobileController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+  TextEditingController();
   File? _image;
   bool isLoading = false;
-  String? errorMessage ="";
+  String? errorMessage = "";
 
   Future<void> pickImage() async {
-    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    final pickedFile =
+    await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       setState(() => _image = File(pickedFile.path));
     }
@@ -37,7 +39,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
     // setState(() => isLoading = true);
 
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      UserCredential userCredential =
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailController.text.trim(),
         password: passwordController.text.trim(),
       );
@@ -50,7 +53,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
         profileImageUrl = await storageRef.getDownloadURL();
       }
 
-      await FirebaseFirestore.instance.collection("users").doc(userCredential.user!.uid).set({
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(userCredential.user!.uid)
+          .set({
         "uid": userCredential.user!.uid,
         "name": nameController.text,
         "email": emailController.text.trim(),
@@ -60,7 +66,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomeScreen(userId: userCredential.user!.uid)),
+        MaterialPageRoute(
+            builder: (context) => HomeScreen(userId: userCredential.user!.uid)),
       );
     } on FirebaseAuthException catch (e) {
       setState(() => errorMessage = e.message);
@@ -85,26 +92,67 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: CircleAvatar(
                     radius: 50,
                     backgroundImage: _image != null ? FileImage(_image!) : null,
-                    child: _image == null ? Icon(Icons.camera_alt, size: 50) : null,
+                    child: _image == null
+                        ? Icon(Icons.camera_alt, size: 50)
+                        : null,
                   ),
                 ),
-                SizedBox(height: 10),
-                TextField(controller: nameController, decoration: InputDecoration(labelText: "Name")),
-                TextField(controller: emailController, decoration: InputDecoration(labelText: "Email")),
-                TextField(controller: mobileController, decoration: InputDecoration(labelText: "Mobile")),
-                TextField(controller: passwordController, decoration: InputDecoration(labelText: "Password"), obscureText: true),
-                TextField(controller: confirmPasswordController, decoration: InputDecoration(labelText: "Confirm Password"), obscureText: true),
-               
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(errorMessage!, style: TextStyle(color: Colors.red)),
-                  ),
+                SizedBox(height: 28),
+                TextField(
+                    controller: nameController,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(24)),
+                        labelText: "Name")),
+                SizedBox(height: 16),
+
+                TextField(
+                    controller: emailController,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(24)),
+                        labelText: "Email")),
+                SizedBox(height: 16),
+
+                TextField(
+                    controller: mobileController,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(24)),
+                        labelText: "Mobile")),
+                SizedBox(height: 16),
+
+                TextField(
+                    controller: passwordController,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(24)),
+                        labelText: "Password"),
+                    obscureText: true),
+                SizedBox(height: 16),
+
+                TextField(
+                    controller: confirmPasswordController,
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(24)),
+                        labelText: "Confirm Password"),
+                    obscureText: true),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child:
+                  Text(errorMessage!, style: TextStyle(color: Colors.red)),
+                ),
                 SizedBox(height: 20),
                 isLoading
                     ? CircularProgressIndicator()
                     : ElevatedButton(
+                  style: ButtonStyle(backgroundColor:  MaterialStateProperty.all(Colors.blue),),
                   onPressed: register,
-                  child: Text("Register"),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("Register",style: TextStyle(color: Colors.white,fontSize: 18),),
+                  ),
                 ),
               ],
             ),

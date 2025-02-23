@@ -34,24 +34,30 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // appBar: AppBar(
+      //   title: Text("Login",style: TextStyle(fontSize: 28),),
+      //   centerTitle: true,
+      // ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Text("Login",style: TextStyle(fontSize: 24),),
+              SizedBox(height: 38,),
               TextFormField(
                 controller: emailController,
                 decoration: InputDecoration(
 
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: Colors.grey),
                     ),
-enabledBorder: OutlineInputBorder(
-  borderRadius: BorderRadius.circular(12),
-  borderSide: BorderSide(color: Colors.grey),
-),focusedBorder: OutlineInputBorder(
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: Colors.grey),
+                    ),focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: BorderSide(color: Colors.grey),
                 ),
@@ -76,10 +82,10 @@ enabledBorder: OutlineInputBorder(
                     labelText: "Password"),
               ),
 
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(errorMessage!, style: TextStyle(color: Colors.red)),
-                ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(errorMessage!, style: TextStyle(color: Colors.red)),
+              ),
               SizedBox(height: 20),
               isLoading
                   ? CircularProgressIndicator()
@@ -89,7 +95,10 @@ enabledBorder: OutlineInputBorder(
                 onPressed: signIn,
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),
-                  child: Text("Login",style: TextStyle(color: Colors.white),),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: Text("Login",style: TextStyle(color: Colors.white,fontSize: 18),),
+                  ),
                 ),
               ),
             ],

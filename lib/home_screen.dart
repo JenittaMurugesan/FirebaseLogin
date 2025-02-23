@@ -9,7 +9,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("User Profile")),
+      appBar: AppBar(title: Text("User Profile"),
+        centerTitle: true,),
       body: FutureBuilder<DocumentSnapshot>(
         future: FirebaseFirestore.instance.collection("users").doc(userId).get(),
         builder: (context, snapshot) {
